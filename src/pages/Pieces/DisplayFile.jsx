@@ -12,9 +12,9 @@ import "@react-pdf-viewer/page-navigation/lib/styles/index.css";
 import { Document, Page } from "react-pdf";
 
 const DisplayFile = () => {
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  //create instance
+//   const [numPages, setNumPages] = useState(null);
+//   const [pageNumber, setPageNumber] = useState(1);
+//create instance
 //   const pageNavigationPluginInstance = pageNavigationPlugin();
 //   const goToPage = () => {
 //     pageNavigationPluginInstance.CurrentPageInput = 10;
