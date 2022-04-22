@@ -1,0 +1,140 @@
+$primaryClr: #333333;
+$secondClr: #3333335b;
+$shadowPrim: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+  rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+.pieces {
+  .container {
+    display: flex;
+    gap: 2%;
+    .pieceGrid {
+      width: 59%;
+    }
+    .displayFile {
+      width: 39%;
+      h1 {
+        background-color: $primaryClr;
+        height: 45px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+      .fields {
+        // margin-top: 10px;
+        padding: 0 5px;
+        .field {
+          display: flex;
+          align-items: center;
+          height: 50px;
+          > label {
+            width: 50%;
+          }
+          .input {
+            width: 50%;
+            height: 35px;
+            outline: none;
+            border: 1px solid $secondClr;
+          }
+          .page_photo {
+            width: 50%;
+            height: 35px;
+            border: 1px dashed $secondClr;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .uploadIcon {
+              color: $primaryClr;
+            }
+          }
+          .select {
+            width: 50%;
+            > div {
+              height: 100% !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.newPiece {
+  color: $primaryClr;
+  box-shadow: $shadowPrim;
+  width: 700px;
+  border-radius: 4px;
+  height: max-content;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  // top: -40px;
+  top: 120px;
+  padding: 10px;
+  text-align: center;
+  background-color: white;
+  .modelHeader {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $secondClr;
+    margin-bottom: 10px;
+    height: 40px;
+    padding: 0 10px;
+    background-color: $primaryClr;
+    color: white;
+    .closeBtnInner {
+      cursor: pointer;
+    }
+  }
+  .modelWrapper {
+    padding: 0 10px;
+    .fields {
+      display: flex;
+      gap: 2%;
+      // justify-content: space-between;
+    }
+    .field {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: max-content;
+      margin: 10px 0;
+      label {
+        display: flex;
+        justify-content: start;
+      }
+      > input , .input {
+        box-shadow: $shadowPrim;
+        background-color: #21818e12;
+        outline: none;
+        padding-left: 5px;
+        height: 55px;
+        border-radius: 4px;
+        margin-top: 5px;
+      }
+      textarea {
+        box-shadow: $shadowPrim;
+        background-color: #21818e12;
+        outline: none;
+        padding-left: 5px;
+        border-radius: 4px;
+      }
+    }
+    .modelBtns {
+      display: flex;
+      justify-content: end;
+      > button {
+        background-color: $primaryClr;
+        color: white;
+        width: 100px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}

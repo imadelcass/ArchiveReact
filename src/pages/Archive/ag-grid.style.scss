@@ -1,0 +1,35 @@
+$primaryClr: #333333;
+$secondClr: #3333335b;
+.ag-header-row {
+  height: 45px !important;
+  .ag-header-cell {
+    background-color: $primaryClr;
+    color: white;
+    &:hover {
+      background-color: $primaryClr !important;
+      color: white !important;
+    }
+    .ag-header-icon {
+      color: white !important;
+    }
+  }
+}
+.actionHeaderCol {
+  .ag-header-cell-label {
+    display: flex;
+    justify-content: center;
+  }
+}
+.archiveHeaderCol{
+  .ag-header-cell-label {
+    display: flex;
+    justify-content: center;
+  }
+}
+.ag-cell-focus,.ag-cell-no-focus{
+  border: 1px solid transparent !important;
+}
+
+.ag-cell-inline-editing{
+  height: 100% !important;
+}
