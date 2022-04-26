@@ -10,6 +10,7 @@ import AlertMsg from "./components/Alert";
 import Rangers from "./pages/Rangers";
 import { GlobalProvider } from "./context/GlobalState";
 import Pieces from "./pages/Pieces";
+import { PiecesFornis } from "./pages/DossPieces";
 import { AlertProvider } from "./context/AlertContext";
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                   <Route path="/dossiers" element={<Dossiers />} />
                   <Route path="/Rangers" element={<Rangers />} />
                   <Route path="/pieces" element={<Pieces />} />
+                  <Route path="/dossiers/pieces-fornis" element={<PiecesFornis />} />
                 </Routes>
               </AlertMsg>
             </Layout>

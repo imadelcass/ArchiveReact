@@ -249,22 +249,22 @@ $secondClr: #3333335b;
   }
 }
 
-@media print {
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  body * {
-    visibility: hidden;
-  }
-  .table * {
-    visibility: visible;
-  }
-  .table {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-}
+// @media print {
+//   ::-webkit-scrollbar {
+//     display: none;
+//   }
+//   body * {
+//     visibility: hidden;
+//   }
+//   .table * {
+//     visibility: visible;
+//   }
+//   .table {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//   }
+// }
 
 .headerGrid {
   background-color: aqua !important;

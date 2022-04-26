@@ -9,8 +9,8 @@ import { Add, Print } from "@mui/icons-material";
 import NewPiece from "./NewPiece";
 import ActionCell from "./ActionCell";
 
-const PieceGrid = ({pieces}) => {
-  const { refDossiers, refPieceTypes } = useContext(GlobalContext);
+const PieceGrid = ({ pieces }) => {
+  const { refDossiers, refPieceTypes, setPdf } = useContext(GlobalContext);
   const [display, setDisplay] = useState(false);
   const gridRef = useRef();
   const extractValues = (mappings) => {
@@ -57,6 +57,11 @@ const PieceGrid = ({pieces}) => {
     sortable: true,
     filter: true,
   };
+
+  const onRowClicked = (props) => {
+    setPdf('test.pdf');
+  };
+
   return (
     <div className={style.pieceGrid}>
       <div className="flex justify-end h-10">
@@ -80,6 +85,7 @@ const PieceGrid = ({pieces}) => {
           rowSelection="single"
           editType="fullRow"
           suppressClickEdit
+          onRowClicked={(props) => onRowClicked(props)}
         />
       </div>
       {display && <NewPiece display={display} setDisplay={setDisplay} />}

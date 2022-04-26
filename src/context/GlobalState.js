@@ -24,6 +24,7 @@ export const GlobalProvider = ({ children }) => {
   const [dossiers, setDossiers] = useState([]);
   const [refDossiers, setRefDossiers] = useState([]);
   const [refPieceTypes, setRefPieceTypes] = useState([]);
+  const [pdf, setPdf] = useState("");
   // Actions for changing state
   const getTypeDossiers = async () => {
     try {
@@ -173,6 +174,8 @@ export const GlobalProvider = ({ children }) => {
         dossiers,
         refDossiers,
         refPieceTypes,
+        pdf,
+        setPdf,
       }}
     >
       {children}

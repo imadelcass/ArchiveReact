@@ -53,7 +53,7 @@
       background-color: #333;
       .MenuItem {
         width: 99%;
-        height: 50px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -70,4 +70,28 @@
       width: 90%;
     }
   }
+}
+.close {
+  // height: 70px;
+  // transition: all 0.5s;
+}
+.collapse {
+  // transition: all 0.5s;
+  // height: 140px;
+}
+.openInner {
+  height: 170px;
+  transition: all 0.5s;
+  // transition-delay: 0.5s;
+  color: #fff;
+  border: #fff 1px solid;
+  transform: translateY(0px);
+}
+.closeInner {
+  height: 0;
+  transition: all 0.5s;
+  transform: translateY(-40px);
+  // transition-delay: 0.5s;
+  // color: transparent;
+  // border: transparent 1px solid;
 }

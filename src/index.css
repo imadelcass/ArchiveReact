@@ -7,6 +7,26 @@
   padding: 0;
   box-sizing: border-box;
 }
-  body {
-    font-family: "Nunito", sans-serif;
-  }
+body {
+  font-family: "Nunito", sans-serif;
+}
+.react-pdf__Page__canvas {
+  height: 598px !important;
+  object-fit: contain !important;
+  display: flex;
+  justify-content: center;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 10px 1fr;
+  /* grid-template-columns: 10% 0.4% 89.6%; */
+}
+
+.gutter-col {
+  grid-row: 1/-1;
+  cursor: col-resize;
+}
+
+.gutter-col-1 {
+  grid-column: 2;
+}
