@@ -30,3 +30,20 @@ body {
 .gutter-col-1 {
   grid-column: 2;
 }
+
+@media print {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .table * {
+    visibility: visible;
+  }
+  .table {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

@@ -4,6 +4,7 @@ import NavigateNextSharpIcon from "@mui/icons-material/NavigateNextSharp";
 import NavigateBeforeSharpIcon from "@mui/icons-material/NavigateBeforeSharp";
 import FirstPageSharpIcon from "@mui/icons-material/FirstPageSharp";
 import LastPageSharpIcon from "@mui/icons-material/LastPageSharp";
+import pdf from "./React App.pdf";
 // import { Worker } from "@react-pdf-viewer/core";
 // import { Viewer } from "@react-pdf-viewer/core";
 // import "@react-pdf-viewer/core/lib/styles/index.css";
@@ -36,8 +37,8 @@ const DisplayFile = () => {
       <h1>Le fichier de piece</h1>
       <div className="h-[600px] w-full">
         <Document
-          file={url}
-          // file={pdf}
+          // file={url}
+          file={pdf}
           className="w-full h-[598px] flex justify-center items-center"
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={(e) => console.log(e)}
