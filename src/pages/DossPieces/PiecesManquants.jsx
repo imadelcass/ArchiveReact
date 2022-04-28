@@ -55,7 +55,7 @@ const PiecesManquants = () => {
           List des dossiers incomplets
         </h1>
         <div className="flex justify-end h-10">
-          {printIcon && (
+          {printDoss && (
             <Tooltip
               onClick={handleDossPrint}
               title="Print"
@@ -68,11 +68,11 @@ const PiecesManquants = () => {
             </Tooltip>
           )}
         </div>
-        {printIcon && <Grid columns={Columns()} />}
-        {!printIcon && (
+        {printDoss && <Grid columns={Columns()} />}
+        {!printDoss && (
           <div
             className={`p-1 flex border-b border-t  w-10/12 m-auto items-center ${
-              printIcon ? "text-white bg-primer border-primer" : "bg-gray-300"
+              printDoss ? "text-white bg-primer border-primer" : "bg-gray-300"
             }`}
           >
             <div className="flex-1 ">Num</div>
@@ -82,7 +82,7 @@ const PiecesManquants = () => {
             <div className="flex-1 ">Annee</div>
           </div>
         )}
-        {!printIcon &&
+        {!printDoss &&
           dossiers.map((d) => (
             <div
               className={`p-1 flex border-b border-gray-300  w-10/12 m-auto items-center`}
@@ -95,7 +95,7 @@ const PiecesManquants = () => {
             </div>
           ))}
 
-        {!printIcon && (
+        {printDoss && (
           <div className="flex flex-col pl-6">
             <div className="mb-4 flex items-center">
               <label className="pr-4">N° Dossier : </label>
@@ -119,31 +119,46 @@ const PiecesManquants = () => {
             </div>
           </div>
         )}
-        <h1 className="mt-8 text-center text-xl ">List des pieces manquants</h1>
+        {printDoss && (
+          <h1 className="mt-8 text-center text-xl ">
+            List des pieces manquants
+          </h1>
+        )}
         <div className="flex justify-end h-10 w-8/12 m-auto">
-          {printIcon && (
-            <Tooltip onClick={handleDossPrint} title="Print" placement="top" arrow>
+          {printDoss && (
+            <Tooltip
+              onClick={handleDossPrint}
+              title="Print"
+              placement="top"
+              arrow
+            >
               <IconButton>
                 <Print color="action" />
               </IconButton>
             </Tooltip>
           )}
         </div>
-        <div
-          className={`p-1 flex border-b border-t  w-8/12 m-auto items-center ${
-            printIcon ? "text-white bg-primer border-primer" : "bg-gray-300"
-          }`}
-        >
-          <div className="flex-1 ">Num</div>
-          <div className="flex-1 ">Intitule type</div>
-        </div>
+        {printDoss && (
+          <div
+            className={`p-1 flex border-b border-t  w-8/12 m-auto items-center ${
+              printDoss ? "text-white bg-primer border-primer" : "bg-gray-300"
+            }`}
+          >
+            <div className="flex-1 ">Num</div>
+            <div className="flex-1 ">Intitule type</div>
+          </div>
+        )}
         {dossier != undefined &&
-          dossier.pieces.map((p) => (
-            <div className="p-1 flex border-b border-gray-300 w-8/12 m-auto items-center">
-              <div className="break-all	 flex-1">{p.numPiece}</div>
-              <div className="break-all	 flex-1">{p.type.IntituleTypePiece}</div>
-            </div>
-          ))}
+          dossier.pieces.map((p) => {
+            printDoss && (
+              <div className="p-1 flex border-b border-gray-300 w-8/12 m-auto items-center">
+                <div className="break-all	 flex-1">{p.numPiece}</div>
+                <div className="break-all	 flex-1">
+                  {p.type.IntituleTypePiece}
+                </div>
+              </div>
+            );
+          })}
       </div>
     </>
   );
