@@ -1,7 +1,7 @@
 import { AgGridReact } from "ag-grid-react";
 import { useContext, useRef } from "react";
 import { GlobalContext } from "../../context/GlobalState";
-const Grid = ({ columns }) => {
+const Grid = ({ columns, setDossier }) => {
   const { dossiers } = useContext(GlobalContext);
   const gridRef = useRef();
 
@@ -10,6 +10,9 @@ const Grid = ({ columns }) => {
     flex: 1,
     sortable: true,
     filter: true,
+  };
+  const onSelectionChanged = () => {
+    setDossier(() => gridRef.current.api.getSelectedRows()[0]);
   };
   return (
     <div className="ag-theme-material h-56">
@@ -22,6 +25,7 @@ const Grid = ({ columns }) => {
         editType="fullRow"
         getRowNodeId={(data) => data.id}
         suppressClickEdit
+        onSelectionChanged={onSelectionChanged}
       />
     </div>
   );
