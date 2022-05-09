@@ -6,15 +6,20 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
+import MenuIcon from '@mui/icons-material/Menu';
 function Layout({ children }) {
   const [collapse, setCollapse] = useState(false);
   const [resize, setResize] = useState(false);
   const [screenWidth, setScreenWidth] = useState(1280);
   const [cursorPositionX, setCursorPositionX] = useState(null);
+  const [hideVerticalMenu, setHideVerticalMenu] = useState(true);
+
   const verticalMenu = useRef();
   const pageContent = useRef();
   useEffect(
-    () => setCursorPositionX(() => verticalMenu.current.offsetWidth),
+    // () => setCursorPositionX(() => verticalMenu.current.offsetWidth),
+    () => setCursorPositionX(200),
+    // console.log(window.screen.width),
     []
   );
 
@@ -50,9 +55,8 @@ function Layout({ children }) {
       <div className={style.navbar}>
         <div className={style.logo}>Logo</div>
         <nav className={style.nav}>
-          <a href='#'>Contact</a>
-          <a href='#'>Contact</a>
-          <a href='#'>Contact</a>
+          <Link to='connexion'>Connexion</Link>
+          <MenuIcon className={style.menuIcon} onClick={() => setHideVerticalMenu(prev => !prev)} />
         </nav>
       </div>
       <div className={style.pageWrapper}>
@@ -60,12 +64,15 @@ function Layout({ children }) {
           style={{
             width: cursorPositionX != null ? `${cursorPositionX}px` : '',
           }}
-          className={style.verticalMenu}
+          className={`${style.verticalMenu} ${
+            hideVerticalMenu ? style.hideVerticalMenu : ''
+          }`}
           ref={verticalMenu}
         >
           <div
             className={resize ? style.hideVertMenu : style.showVertMenu}
           ></div>
+
           <Link
             to={'/archive'}
             className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
@@ -73,7 +80,6 @@ function Layout({ children }) {
             <ApartmentIcon />
             {cursorPositionX >= 153 ? <p>Locaux & Services</p> : ''}
           </Link>
-
           <Link
             to={'/beneficiere'}
             className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
@@ -81,7 +87,6 @@ function Layout({ children }) {
             <SupervisedUserCircleIcon />
             {cursorPositionX >= 153 ? <p>Beneficiaires</p> : ''}
           </Link>
-
           <Link
             to={'/Rangers'}
             className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
@@ -89,7 +94,6 @@ function Layout({ children }) {
             <SupervisedUserCircleIcon />
             {cursorPositionX >= 153 ? <p>Rangers</p> : ''}
           </Link>
-
           <div className={`border-b border-white`}>
             <div
               onClick={() => setCollapse(prev => !prev)}
@@ -132,7 +136,6 @@ function Layout({ children }) {
               </Link>
             </div>
           </div>
-
           <Link
             to={'/pieces'}
             className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
@@ -141,6 +144,7 @@ function Layout({ children }) {
             {cursorPositionX >= 153 ? <p>Pieces</p> : ''}
           </Link>
         </div>
+
         <div
           className={style.resizePage}
           onMouseDown={() => setResize(true)}

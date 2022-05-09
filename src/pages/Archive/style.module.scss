@@ -1,5 +1,5 @@
-@import "~ag-grid-community/src/styles/ag-grid.scss";
-@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+@import '~ag-grid-community/src/styles/ag-grid.scss';
+@import '~ag-grid-community/dist/styles/ag-theme-material.css';
 
 // $primaryClr : #11468F;
 // $secondClr : #58aff1b6;
@@ -231,7 +231,6 @@ $secondClr: #3333335b;
     }
   }
 }
-
 .RowAction {
   display: flex;
   align-items: center;
@@ -248,24 +247,58 @@ $secondClr: #3333335b;
     justify-content: center;
   }
 }
-
-// @media print {
-//   ::-webkit-scrollbar {
-//     display: none;
-//   }
-//   body * {
-//     visibility: hidden;
-//   }
-//   .table * {
-//     visibility: visible;
-//   }
-//   .table {
-//     position: absolute;
-//     left: 0;
-//     top: 0;
-//   }
-// }
-
 .headerGrid {
   background-color: aqua !important;
+}
+@media (max-width: 1199.98px) {
+  .archiveAndService {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+  }
+  .archive {
+    width: 100%;
+    height: calc(50vh - 40px);
+    display: flex;
+    flex-direction: column;
+    .table {
+      flex: 1;
+    }
+  }
+  .service {
+    width: 100%;
+    height: calc(50vh - 40px);
+    display: flex;
+    flex-direction: column;
+    .table {
+      flex: 1;
+    }
+  }
+}
+@media (max-width: 767.98px) {
+  .archiveAndService {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+  }
+  .archive {
+    width: 100%;
+    height: calc(50vh - 40px);
+    display: flex;
+    flex-direction: column;
+    .table {
+      flex: 1;
+    }
+  }
+  .service {
+    width: 100%;
+    height: calc(50vh - 40px);
+    display: flex;
+    flex-direction: column;
+    .table {
+      flex: 1;
+    }
+  }
+}
+@media (max-width: 575.98px) {
 }

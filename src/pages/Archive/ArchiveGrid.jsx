@@ -23,7 +23,7 @@ function ArchiveGrid() {
   };
   const columnDefs = [
     {
-      headerName: "Code Archive",
+      headerName: "Code",
       field: "codeArchive",
       sortable: true,
       filter: true,
@@ -31,16 +31,16 @@ function ArchiveGrid() {
       headerHeight: 400,
     },
     {
-      headerName: "Intitul Archive",
+      headerName: "Intitul",
       field: "intitulArchive",
       sortable: true,
       filter: true,
-      flex: 7,
+      flex: 6,
     },
     {
       headerName: "Action",
       field: "action",
-      flex: 2,
+      flex: 3,
       filter: false,
       editable: false,
       headerClass: "actionHeaderCol",

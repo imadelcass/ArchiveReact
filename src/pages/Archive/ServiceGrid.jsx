@@ -23,7 +23,7 @@ function ServiceGrid() {
   };
   const columnDefs = [
     {
-      headerName: "Code Service",
+      headerName: "Code",
       field: "codeService",
       sortable: true,
       filter: true,
@@ -31,16 +31,16 @@ function ServiceGrid() {
       headerHeight: 400,
     },
     {
-      headerName: "Intitul Service",
+      headerName: "Intitul",
       field: "libService",
       sortable: true,
       filter: true,
-      flex: 7,
+      flex: 6,
     },
     {
       headerName: "Action",
       field: "action",
-      flex: 2,
+      flex: 3,
       filter: false,
       editable: false,
       headerClass: "actionHeaderCol",
