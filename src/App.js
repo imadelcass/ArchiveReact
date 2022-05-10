@@ -12,6 +12,7 @@ import Pieces from "./pages/Pieces";
 import { PiecesFornis } from "./pages/DossPieces";
 import { AlertProvider } from "./context/AlertContext";
 import PiecesManquants from "./pages/DossPieces/PiecesManquants";
+import Users from "./pages/Users";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
                   <Route path="/dossiers" element={<Dossiers />} />
                   <Route path="/Rangers" element={<Rangers />} />
                   <Route path="/pieces" element={<Pieces />} />
+                  <Route path="/utilisateurs" element={<Users />} />
                   <Route
                     path="/dossiers/pieces-fornis"
                     element={<PiecesFornis />}

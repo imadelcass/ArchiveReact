@@ -55,7 +55,7 @@ function Layout({ children }) {
       <div className={style.navbar}>
         <div className={style.logo}>Logo</div>
         <nav className={style.nav}>
-          <Link to='connexion'>Connexion</Link>
+          <Link className={style.link} to='connexion'>Connexion</Link>
           <MenuIcon className={style.menuIcon} onClick={() => setHideVerticalMenu(prev => !prev)} />
         </nav>
       </div>
@@ -142,6 +142,13 @@ function Layout({ children }) {
           >
             <SupervisedUserCircleIcon />
             {cursorPositionX >= 153 ? <p>Pieces</p> : ''}
+          </Link>
+          <Link
+            to={'/utilisateurs'}
+            className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
+          >
+            <SupervisedUserCircleIcon />
+            {cursorPositionX >= 153 ? <p>Utilisateurs</p> : ''}
           </Link>
         </div>
 

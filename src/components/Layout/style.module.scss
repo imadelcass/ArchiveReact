@@ -147,6 +147,9 @@
   .layout {
     .navbar {
       .nav{
+        .link{
+          display: none;
+        }
         .menuIcon{
           display: initial;
           cursor: pointer;

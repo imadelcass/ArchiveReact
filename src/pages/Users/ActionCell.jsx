@@ -3,12 +3,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import Update from "@mui/icons-material/Update";
 import Cancel from "@mui/icons-material/Cancel";
 import { IconButton, Tooltip } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import style from "./style.module.scss";
 import axios from "axios";
-const ActionComponentCell = ({ gridRef, props }) => {
+import { AlertContext } from "../../context/AlertContext";
+function ActionCell({ props, gridRef }) {
+  //states
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [editing, setEditing] = useState(false);
+  const { setAlert } = useContext(AlertContext);
+  //functions
   useEffect(() => {
     props.api.addEventListener("rowEditingStarted", onRowEditingStarted);
     props.api.addEventListener("rowEditingStopped", onRowEditingStopped);
@@ -28,60 +32,44 @@ const ActionComponentCell = ({ gridRef, props }) => {
       setEditing(false);
     }
   };
-  //voir un archive(les inputes) pour le modifier
-  const displayArchive = () => {
+  const displayUser = () => {
     props.api.startEditingCell({
       rowIndex: props.rowIndex,
       colKey: props.column.colId,
     });
-    setEditing(true);
   };
-  // cancel btn
-  const cancelUpdateArchive = () => {
+  const cancelUpdateUser = () => {
     props.api.stopEditing(true);
   };
-
-
-
-
-
-  const updateArchive = async () => {
+  const updateUser = async () => {
     props.api.stopEditing(false);
     try {
-      const req = await axios.post(`/archive/add`, props.data);
+      const req = await axios.post(`/user/add`, props.data);
       const data = await req.data;
       console.log(data);
-      //   if (data.success) {
-      //     getArchives();
-      //   }
     } catch (error) {
       console.log("error", error);
     }
   };
-
-
-
-
-
-
-
-
-
-
-  
-  //supprimer un archive
-  const deleteArchive = async () => {
+  const deleteUser = async () => {
     try {
-      const req = await axios.delete(
-        `${baseUrl}/archive/destroy/${props.data.id}`
-      );
+      const req = await axios.delete(`user/destroy/${props.data.id}`);
       const data = await req.data;
+      console.log(data);
       if (data.success) {
         //   if delete succeeded in db => delete the row in client side
         const selectedData = gridRef.current.api.getSelectedRows();
         gridRef.current.api.applyTransaction({ remove: selectedData });
         gridRef.current.api.refreshCells({ force: true });
       }
+      //execute alert
+      setAlert(() => {
+        return {
+          state: true,
+          text: data.msg,
+          severity: data.severity,
+        };
+      });
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +78,7 @@ const ActionComponentCell = ({ gridRef, props }) => {
     <div className={style.RowAction}>
       {editing ? (
         <>
-          <div className={style.editArchive} onClick={() => updateArchive()}>
+          <div className={style.editArchive} onClick={() => updateUser()}>
             <Tooltip title="Update" arrow>
               <IconButton>
                 <Update fontSize={"100px"} />
@@ -99,7 +87,7 @@ const ActionComponentCell = ({ gridRef, props }) => {
           </div>
           <div
             className={style.deleteArchive}
-            onClick={() => cancelUpdateArchive()}
+            onClick={() => cancelUpdateUser()}
           >
             <Tooltip title="Cancel" arrow>
               <IconButton>
@@ -110,14 +98,14 @@ const ActionComponentCell = ({ gridRef, props }) => {
         </>
       ) : (
         <>
-          <div className={style.editArchive} onClick={() => displayArchive()}>
+          <div className={style.editArchive} onClick={() => displayUser()}>
             <Tooltip title="Edit" arrow>
               <IconButton>
                 <EditIcon fontSize={"100px"} />
               </IconButton>
             </Tooltip>
           </div>
-          <div className={style.deleteArchive} onClick={() => deleteArchive()}>
+          <div className={style.deleteArchive} onClick={() => deleteUser()}>
             <Tooltip title="Delete" arrow>
               <IconButton>
                 <DeleteIcon fontSize={"small"} />
@@ -128,5 +116,6 @@ const ActionComponentCell = ({ gridRef, props }) => {
       )}
     </div>
   );
-};
-export default ActionComponentCell;
+}
+
+export default ActionCell;
