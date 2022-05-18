@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import style from './style.module.scss';
 import ApartmentIcon from '@mui/icons-material/Apartment';
@@ -7,12 +7,14 @@ import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
+import { GlobalContext } from '../../context/GlobalState';
 function Layout({ children }) {
   const [collapse, setCollapse] = useState(false);
   const [resize, setResize] = useState(false);
   const [screenWidth, setScreenWidth] = useState(1280);
   const [cursorPositionX, setCursorPositionX] = useState(null);
   const [hideVerticalMenu, setHideVerticalMenu] = useState(true);
+  const { user } = useContext(GlobalContext);
 
   const verticalMenu = useRef();
   const pageContent = useRef();
@@ -55,8 +57,13 @@ function Layout({ children }) {
       <div className={style.navbar}>
         <div className={style.logo}>Logo</div>
         <nav className={style.nav}>
-          <Link className={style.link} to='connexion'>Connexion</Link>
-          <MenuIcon className={style.menuIcon} onClick={() => setHideVerticalMenu(prev => !prev)} />
+          <Link className={style.link} to='login'>
+            Connexion
+          </Link>
+          <MenuIcon
+            className={style.menuIcon}
+            onClick={() => setHideVerticalMenu(prev => !prev)}
+          />
         </nav>
       </div>
       <div className={style.pageWrapper}>
@@ -143,13 +150,18 @@ function Layout({ children }) {
             <SupervisedUserCircleIcon />
             {cursorPositionX >= 153 ? <p>Pieces</p> : ''}
           </Link>
-          <Link
-            to={'/utilisateurs'}
-            className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
-          >
-            <SupervisedUserCircleIcon />
-            {cursorPositionX >= 153 ? <p>Utilisateurs</p> : ''}
-          </Link>
+
+          {user?.isAdmin  (
+            <Link
+              to={'/utilisateurs'}
+              className={
+                cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon
+              }
+            >
+              <SupervisedUserCircleIcon />
+              {cursorPositionX >= 153 ? <p>Utilisateurs</p> : ''}
+            </Link>
+          )}
         </div>
 
         <div

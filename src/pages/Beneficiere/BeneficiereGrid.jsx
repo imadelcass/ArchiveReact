@@ -1,74 +1,60 @@
-import { AgGridReact } from "ag-grid-react";
-import { useRef, useState } from "react";
-import style from "./style.module.scss";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-material.css";
-import axios from "axios";
-import BeneficiaireAction from "./BeneficiaireAction";
-
+import { AgGridReact } from 'ag-grid-react';
+import { useRef, useState } from 'react';
+import style from './style.module.scss';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
+import BeneficiaireAction from './BeneficiaireAction';
+import useData from '../../hooks/useData';
 function BeneficiereGrid(props) {
-  const baseUrl = process.env.REACT_APP_BASE_URL;
-  const [beneficieres, setBeneficieres] = useState([]);
   const gridRef = useRef();
+  const { data } = useData({ url: '/beneficieres' });
   //return grid ref to parent
   props.getGridRef(gridRef);
-  const getBeneficiers = async () => {
-    try {
-      const req = await axios.get(`${baseUrl}/beneficieres  `);
-      const data = await req.data;
-      setBeneficieres(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useState(() => {
-    getBeneficiers();
-  }, []);
   const columnDefs = [
     {
-      headerName: "Code",
-      field: "CODEBENEFICIAIRE",
+      headerName: 'Code',
+      field: 'CODEBENEFICIAIRE',
     },
     {
-      headerName: "Nom",
-      field: "NOMBENEFICIAIRE",
+      headerName: 'Nom',
+      field: 'NOMBENEFICIAIRE',
     },
     {
-      headerName: "Adresse",
-      field: "RUE",
+      headerName: 'Adresse',
+      field: 'RUE',
     },
     {
-      headerName: "Ville",
-      field: "VILLE",
+      headerName: 'Ville',
+      field: 'VILLE',
     },
     {
-      headerName: "CP",
-      field: "CP",
+      headerName: 'CP',
+      field: 'CP',
     },
     {
-      headerName: "Email",
-      field: "EMAIL",
+      headerName: 'Email',
+      field: 'EMAIL',
     },
     {
-      headerName: "Tel",
-      field: "TEL",
+      headerName: 'Tel',
+      field: 'TEL',
     },
     {
-      headerName: "Contact",
-      field: "CONTACT",
+      headerName: 'Contact',
+      field: 'CONTACT',
     },
     {
-      headerName: "GSM",
-      field: "GSM",
+      headerName: 'GSM',
+      field: 'GSM',
     },
     {
-      headerName: "Action",
-      field: "action",
+      headerName: 'Action',
+      field: 'action',
       sortable: false,
       filter: false,
       editable: false,
-      headerClass: "actionHeaderCol",
-      cellRenderer: (props) => (
+      headerClass: 'actionHeaderCol',
+      cellRenderer: props => (
         <BeneficiaireAction gridRef={gridRef} props={props} />
       ),
     },
@@ -84,11 +70,11 @@ function BeneficiereGrid(props) {
       <AgGridReact
         ref={gridRef}
         columnDefs={columnDefs}
-        rowData={beneficieres}
+        rowData={data}
         defaultColDef={defaultColDef}
-        rowSelection="single"
-        editType="fullRow"
-        getRowNodeId={(data) => data.id}
+        rowSelection='single'
+        editType='fullRow'
+        getRowNodeId={data => data.id}
         suppressClickEdit
         stopEditingWhenCellsLoseFocus
       />

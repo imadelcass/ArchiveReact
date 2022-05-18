@@ -1,60 +1,54 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import Update from "@mui/icons-material/Update";
-import Cancel from "@mui/icons-material/Cancel";
-import { IconButton, Tooltip } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import style from "./style.module.scss";
-import axios from "axios";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Update from '@mui/icons-material/Update';
+import Cancel from '@mui/icons-material/Cancel';
+import { IconButton, Tooltip } from '@mui/material';
+import { useContext, useEffect, useRef, useState } from 'react';
+import style from './style.module.scss';
+import AxiosConfig from '../../AxiosConfig';
+import { AlertContext } from '../../context/AlertContext';
 function ServiceActionCell({ gridRef, props }) {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [editing, setEditing] = useState(false);
+  const { setAlert } = useContext(AlertContext);
+  const axios = AxiosConfig();
+
   useEffect(() => {
-    props.api.addEventListener("rowEditingStarted", onRowEditingStarted);
-    props.api.addEventListener("rowEditingStopped", onRowEditingStopped);
+    props.api.addEventListener('rowEditingStarted', onRowEditingStarted);
+    props.api.addEventListener('rowEditingStopped', onRowEditingStopped);
     return () => {
-      props.api.removeEventListener("rowEditingStarted", onRowEditingStarted);
-      props.api.removeEventListener("rowEditingStopped", onRowEditingStopped);
+      props.api.removeEventListener('rowEditingStarted', onRowEditingStarted);
+      props.api.removeEventListener('rowEditingStopped', onRowEditingStopped);
     };
   }, []);
-  const onRowEditingStarted = (params) => {
+  const onRowEditingStarted = params => {
     if (props.node === params.node) {
       setEditing(true);
     }
   };
-  const onRowEditingStopped = (params) => {
+  const onRowEditingStopped = params => {
     if (props.node === params.node) {
       setEditing(false);
     }
   };
 
-
-
-
-  
   const updateService = async () => {
     props.api.stopEditing(false);
     try {
-      const req = await axios.post(`${baseUrl}/service/add`, props.data);
+      const req = await axios.post(`/service/add`, props.data);
       const data = await req.data;
-      console.log(data);
-      //   if (data.success) {
-      //     getArchives();
-      //   }
+      // execute alert
+      setAlert(() => {
+        return {
+          state: true,
+          text: data.msg,
+          severity: data.severity,
+        };
+      });
     } catch (error) {
       console.log(error);
     }
   };
-
-
-
-
-
-
-
-
-
-
 
   const cancelUpdateService = () => {
     props.api.stopEditing(true);
@@ -67,16 +61,21 @@ function ServiceActionCell({ gridRef, props }) {
   };
   const deleteService = async () => {
     try {
-      const req = await axios.delete(
-        `${baseUrl}/service/destroy/${props.data.id}`
-      );
+      const req = await axios.delete(`/service/destroy/${props.data.id}`);
       const data = await req.data;
+      // execute alert
+      setAlert(() => {
+        return {
+          state: true,
+          text: data.msg,
+          severity: data.severity,
+        };
+      });
       if (data.success) {
         //   if delete succeeded in db => delete the row in client side
         const selectedData = gridRef.current.api.getSelectedRows();
         gridRef.current.api.applyTransaction({ remove: selectedData });
         gridRef.current.api.refreshCells({ force: true });
-
       }
     } catch (error) {
       console.log(error);
@@ -87,9 +86,9 @@ function ServiceActionCell({ gridRef, props }) {
       {editing ? (
         <>
           <div className={style.editArchive} onClick={() => updateService()}>
-            <Tooltip title="Update" arrow>
+            <Tooltip title='Update' arrow>
               <IconButton>
-                <Update fontSize={"100px"} />
+                <Update fontSize={'100px'} />
               </IconButton>
             </Tooltip>
           </div>
@@ -97,9 +96,9 @@ function ServiceActionCell({ gridRef, props }) {
             className={style.deleteArchive}
             onClick={() => cancelUpdateService()}
           >
-            <Tooltip title="Cancel" arrow>
+            <Tooltip title='Cancel' arrow>
               <IconButton>
-                <Cancel fontSize={"small"} />
+                <Cancel fontSize={'small'} />
               </IconButton>
             </Tooltip>
           </div>
@@ -107,16 +106,16 @@ function ServiceActionCell({ gridRef, props }) {
       ) : (
         <>
           <div className={style.editArchive} onClick={() => displayService()}>
-            <Tooltip title="Edit" arrow>
+            <Tooltip title='Edit' arrow>
               <IconButton>
-                <EditIcon fontSize={"100px"} />
+                <EditIcon fontSize={'100px'} />
               </IconButton>
             </Tooltip>
           </div>
           <div className={style.deleteArchive} onClick={() => deleteService()}>
-            <Tooltip title="Delete" arrow>
+            <Tooltip title='Delete' arrow>
               <IconButton>
-                <DeleteIcon fontSize={"small"} />
+                <DeleteIcon fontSize={'small'} />
               </IconButton>
             </Tooltip>
           </div>

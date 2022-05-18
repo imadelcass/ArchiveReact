@@ -1,33 +1,34 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import Update from "@mui/icons-material/Update";
-import Cancel from "@mui/icons-material/Cancel";
-import { IconButton, Tooltip } from "@mui/material";
-import { useContext, useEffect, useRef, useState } from "react";
-import style from "./style.module.scss";
-import axios from "axios";
-import { AlertContext } from "../../context/AlertContext";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Update from '@mui/icons-material/Update';
+import Cancel from '@mui/icons-material/Cancel';
+import { IconButton, Tooltip } from '@mui/material';
+import { useContext, useEffect, useRef, useState } from 'react';
+import style from './style.module.scss';
+import { AlertContext } from '../../context/AlertContext';
+import AxiosConfig from '../../AxiosConfig';
 function BeneficiaireAction({ props, gridRef }) {
   //states
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [editing, setEditing] = useState(false);
   const { setAlert } = useContext(AlertContext);
+  const axios = AxiosConfig();
   //functions
   useEffect(() => {
-    props.api.addEventListener("rowEditingStarted", onRowEditingStarted);
-    props.api.addEventListener("rowEditingStopped", onRowEditingStopped);
+    props.api.addEventListener('rowEditingStarted', onRowEditingStarted);
+    props.api.addEventListener('rowEditingStopped', onRowEditingStopped);
     return () => {
-      props.api.removeEventListener("rowEditingStarted", onRowEditingStarted);
-      props.api.removeEventListener("rowEditingStopped", onRowEditingStopped);
+      props.api.removeEventListener('rowEditingStarted', onRowEditingStarted);
+      props.api.removeEventListener('rowEditingStopped', onRowEditingStopped);
     };
   }, []);
 
-  const onRowEditingStarted = (params) => {
+  const onRowEditingStarted = params => {
     if (props.node === params.node) {
       setEditing(true);
     }
   };
-  const onRowEditingStopped = (params) => {
+  const onRowEditingStopped = params => {
     if (props.node === params.node) {
       setEditing(false);
     }
@@ -51,53 +52,35 @@ function BeneficiaireAction({ props, gridRef }) {
         setAlert(() => {
           return {
             state: true,
-            text: "Le beneficiaire est bien modifier.",
-            severity: "success",
+            text: 'Le beneficiaire est bien modifier.',
+            severity: 'success',
           };
         });
       }
     } catch (error) {
       console.log(error);
-      // execute alert
-      setAlert(() => {
-        return {
-          state: true,
-          text: "Le beneficiaire est pas modifier.",
-          severity: "error",
-        };
-      });
     }
   };
   const deleteBeneficiaire = async () => {
     try {
-      const req = await axios.delete(
-        `${baseUrl}/beneficiaire/destroy/${props.data.id}`
-      );
+      const req = await axios.delete(`/beneficiaire/destroy/${props.data.id}`);
       const data = await req.data;
+      // execute alert
+      setAlert(() => {
+        return {
+          state: true,
+          text: data.msg,
+          severity: data.severity,
+        };
+      });
       if (data.success) {
         //   if delete succeeded in db => delete the row in client side
         const selectedData = gridRef.current.api.getSelectedRows();
         gridRef.current.api.applyTransaction({ remove: selectedData });
         gridRef.current.api.refreshCells({ force: true });
-        //execute alert
-        setAlert(() => {
-          return {
-            state: true,
-            text: "Le beneficiaire est bien supprimmer.",
-            severity: "success",
-          };
-        });
       }
     } catch (error) {
       console.log(error);
-      //execute alert
-      setAlert(() => {
-        return {
-          state: true,
-          text: "Le beneficiaire est pas supprimmer.",
-          severity: "error",
-        };
-      });
     }
   };
   return (
@@ -108,9 +91,9 @@ function BeneficiaireAction({ props, gridRef }) {
             className={style.editArchive}
             onClick={() => updateBeneficiaire()}
           >
-            <Tooltip title="Update" arrow>
+            <Tooltip title='Update' arrow>
               <IconButton>
-                <Update fontSize={"100px"} />
+                <Update fontSize={'100px'} />
               </IconButton>
             </Tooltip>
           </div>
@@ -118,9 +101,9 @@ function BeneficiaireAction({ props, gridRef }) {
             className={style.deleteArchive}
             onClick={() => cancelUpdateBeneficiaire()}
           >
-            <Tooltip title="Cancel" arrow>
+            <Tooltip title='Cancel' arrow>
               <IconButton>
-                <Cancel fontSize={"small"} />
+                <Cancel fontSize={'small'} />
               </IconButton>
             </Tooltip>
           </div>
@@ -131,9 +114,9 @@ function BeneficiaireAction({ props, gridRef }) {
             className={style.editArchive}
             onClick={() => displayBeneficiaire()}
           >
-            <Tooltip title="Edit" arrow>
+            <Tooltip title='Edit' arrow>
               <IconButton>
-                <EditIcon fontSize={"100px"} />
+                <EditIcon fontSize={'100px'} />
               </IconButton>
             </Tooltip>
           </div>
@@ -141,9 +124,9 @@ function BeneficiaireAction({ props, gridRef }) {
             className={style.deleteArchive}
             onClick={() => deleteBeneficiaire()}
           >
-            <Tooltip title="Delete" arrow>
+            <Tooltip title='Delete' arrow>
               <IconButton>
-                <DeleteIcon fontSize={"small"} />
+                <DeleteIcon fontSize={'small'} />
               </IconButton>
             </Tooltip>
           </div>

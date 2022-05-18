@@ -1,5 +1,5 @@
-import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import AxiosConfig from '../AxiosConfig';
+import { createContext, useEffect, useState } from 'react';
 
 const initialState = {
   refTypeDoss: {},
@@ -24,7 +24,10 @@ export const GlobalProvider = ({ children }) => {
   const [dossiers, setDossiers] = useState([]);
   const [refDossiers, setRefDossiers] = useState([]);
   const [refPieceTypes, setRefPieceTypes] = useState([]);
-  const [pdf, setPdf] = useState("");
+  const [token, setToken] = useState('');
+  const [pdf, setPdf] = useState('');
+  const [user, setUser] = useState({});
+  const axios = AxiosConfig();
   // Actions for changing state
   const getTypeDossiers = async () => {
     try {
@@ -33,7 +36,7 @@ export const GlobalProvider = ({ children }) => {
       //   setTypedossiers(() => data);
       setRefTypeDoss(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.libTypeDoss;
         });
         return obj;
@@ -44,11 +47,16 @@ export const GlobalProvider = ({ children }) => {
   };
   const getServices = async () => {
     try {
-      const req = await axios.get(`/service`);
+      const req = await axios.get(`/service`, {
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer 6|pD2hco13fWfQFDkoRmCNnM5yi1Lspoen46VyVDOC',
+        },
+      });
       const data = await req.data;
       setRefServices(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.libService;
         });
         return obj;
@@ -63,7 +71,7 @@ export const GlobalProvider = ({ children }) => {
       const data = await req.data;
       setRefBenefs(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.NOMBENEFICIAIRE;
         });
         return obj;
@@ -78,7 +86,7 @@ export const GlobalProvider = ({ children }) => {
       const data = await req.data;
       setRefCellules(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.codeCellule;
         });
         return obj;
@@ -93,7 +101,7 @@ export const GlobalProvider = ({ children }) => {
       const data = await req.data;
       setRefUsers(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.name;
         });
         return obj;
@@ -113,12 +121,12 @@ export const GlobalProvider = ({ children }) => {
   };
   const getTypePieces = async () => {
     try {
-      const req = await axios.get("/typepieces");
+      const req = await axios.get('/typepieces');
       const data = await req.data;
       setTypePieces(data);
       setRefPieceTypes(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.IntituleTypePiece;
         });
         return obj;
@@ -129,12 +137,17 @@ export const GlobalProvider = ({ children }) => {
   };
   const getDossiers = async () => {
     try {
-      const req = await axios.get("/dossiers");
+      const req = await axios.get('/dossiers', {
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer 4|rXY4aftc2iVkzZKZ7hdThzPdDMXSfu9wckArqNa0',
+        },
+      });
       const data = await req.data;
       setDossiers(data);
       setRefDossiers(() => {
         let obj = {};
-        data.map((e) => {
+        data.map(e => {
           obj[e.id] = e.NUMDOSSIER;
         });
         return obj;
@@ -176,6 +189,10 @@ export const GlobalProvider = ({ children }) => {
         refPieceTypes,
         pdf,
         setPdf,
+        token,
+        setToken,
+        user,
+        setUser,
       }}
     >
       {children}
