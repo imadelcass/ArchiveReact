@@ -6,6 +6,9 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import GridOnIcon from '@mui/icons-material/GridOn';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import MenuIcon from '@mui/icons-material/Menu';
 import { GlobalContext } from '../../context/GlobalState';
 function Layout({ children }) {
@@ -14,7 +17,7 @@ function Layout({ children }) {
   const [screenWidth, setScreenWidth] = useState(1280);
   const [cursorPositionX, setCursorPositionX] = useState(null);
   const [hideVerticalMenu, setHideVerticalMenu] = useState(true);
-  const { user } = useContext(GlobalContext);
+  const { user, auth } = useContext(GlobalContext);
 
   const verticalMenu = useRef();
   const pageContent = useRef();
@@ -98,7 +101,7 @@ function Layout({ children }) {
             to={'/Rangers'}
             className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
           >
-            <SupervisedUserCircleIcon />
+            <GridOnIcon />
             {cursorPositionX >= 153 ? <p>Rangers</p> : ''}
           </Link>
           <div className={`border-b border-white`}>
@@ -147,21 +150,21 @@ function Layout({ children }) {
             to={'/pieces'}
             className={cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon}
           >
-            <SupervisedUserCircleIcon />
+            <ExtensionIcon />
             {cursorPositionX >= 153 ? <p>Pieces</p> : ''}
           </Link>
 
-          {user?.isAdmin  (
+          {/* {auth && user?.isAdmin == 1 && ( */}
             <Link
               to={'/utilisateurs'}
               className={
                 cursorPositionX >= 153 ? style.MenuItem : style.MenuIcon
               }
             >
-              <SupervisedUserCircleIcon />
+              <ManageAccountsIcon />
               {cursorPositionX >= 153 ? <p>Utilisateurs</p> : ''}
             </Link>
-          )}
+          {/* )} */}
         </div>
 
         <div

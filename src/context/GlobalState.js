@@ -27,6 +27,7 @@ export const GlobalProvider = ({ children }) => {
   const [token, setToken] = useState('');
   const [pdf, setPdf] = useState('');
   const [user, setUser] = useState({});
+  const [auth, setAuth] = useState(false);
   const axios = AxiosConfig();
   // Actions for changing state
   const getTypeDossiers = async () => {
@@ -193,6 +194,8 @@ export const GlobalProvider = ({ children }) => {
         setToken,
         user,
         setUser,
+        auth,
+        setAuth,
       }}
     >
       {children}

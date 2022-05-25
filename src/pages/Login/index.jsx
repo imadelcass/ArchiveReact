@@ -6,9 +6,9 @@ import axios from 'axios';
 import { GlobalContext } from '../../context/GlobalState';
 
 const Login = () => {
-  const [name, setName] = useState('imad');
-  const [password, setPassword] = useState('123456');
-  const { setToken, setUser } = useContext(GlobalContext);
+  const [name, setName] = useState('user');
+  const [password, setPassword] = useState('1234');
+  const { setToken, setUser, setAuth } = useContext(GlobalContext);
   const navigate = useNavigate();
   const axios = AxiosConfig();
   const login = () => {
@@ -23,6 +23,7 @@ const Login = () => {
           const res = await req.data;
           console.log(res);
           setUser(res.user);
+          setAuth(true);
           setToken(`Bearer ${res.token}`);
           if (res.success) {
             navigate('/');
