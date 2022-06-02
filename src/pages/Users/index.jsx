@@ -11,7 +11,7 @@ import 'ag-grid-community/dist/styles/ag-theme-material.css';
 import ActionCell from './ActionCell';
 const Users = () => {
   const gridRef = useRef();
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [services, setServices] = useState([]);
   const [refServices, setRefServices] = useState({});
   const axios = AxiosConfig();
@@ -19,9 +19,9 @@ const Users = () => {
     try {
       const req = await axios.get('/users');
       const res = await req.data;
-      //   console.log(res);
-      //   return res;
-      setUsers(res);
+      if (res.success) {
+        setUsers(res);
+      }
     } catch (error) {
       console.log(error);
     }

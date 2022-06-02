@@ -1,18 +1,19 @@
 import { Close } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
-import axios from "axios";
+import AxiosConfig from "../../AxiosConfig";
 import { useContext, useState } from "react";
 import { AlertContext } from "../../context/AlertContext";
 import style from "./style.module.scss";
 
+
 const NewTypeDoss = ({ setDisplayNewTypeDoss }) => {
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const axios = AxiosConfig();
   const [code, setCode] = useState("");
   const [libel, setLibel] = useState("");
   const { setAlert } = useContext(AlertContext);
   const addNewDossierType = async () => {
     try {
-      const req = await axios.post(`${baseUrl}/typedossier/add`, {
+      const req = await axios.post(`/typedossier/add`, {
         code,
         libel,
       });

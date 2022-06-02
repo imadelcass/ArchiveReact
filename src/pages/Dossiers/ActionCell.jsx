@@ -5,11 +5,11 @@ import Cancel from "@mui/icons-material/Cancel";
 import { IconButton, Tooltip } from "@mui/material";
 import { memo, useContext, useEffect, useRef, useState } from "react";
 import style from "./style.module.scss";
-import axios from "axios";
+import AxiosConfig from "../../AxiosConfig";
 import { AlertContext } from "../../context/AlertContext";
 const ActionCell = ({ props, gridRef }) => {
   //states
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const axios = AxiosConfig();
   const [editing, setEditing] = useState(false);
   const { setAlert } = useContext(AlertContext);
   //functions
@@ -47,7 +47,7 @@ const ActionCell = ({ props, gridRef }) => {
   const updateDossier = async () => {
     props.api.stopEditing(false);
     try {
-      const req = await axios.put(`${baseUrl}/dossier/update`, props.data);
+      const req = await axios.put(`/dossier/update`, props.data);
       const data = await req.data;
       console.log(data);
       // execute alert
@@ -65,7 +65,7 @@ const ActionCell = ({ props, gridRef }) => {
   const deleteDossier = async () => {
     try {
       const req = await axios.delete(
-        `${baseUrl}/dossier/destroy/${props.data.id}`
+        `/dossier/destroy/${props.data.id}`
       );
       const data = await req.data;
       console.log(data);

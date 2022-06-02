@@ -1,16 +1,17 @@
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import style from "./style.module.scss";
-import axios from "axios";
+import AxiosConfig from "../../AxiosConfig";
 import { useEffect, useState } from "react";
 import { MenuItem, Select } from "@mui/material";
-const baseUrl = process.env.REACT_APP_BASE_URL;
+
 
 function BenefiSelect({idBenef, setIdBenef}) {
+  const axios = AxiosConfig();
   const [beneficiaires, setBeneficiaires] = useState([]);
   const getBeneficiaires = async () => {
     try {
-      const req = await axios.get(`${baseUrl}/beneficieres`);
+      const req = await axios.get(`/beneficieres`);
       const data = await req.data;
       setBeneficiaires(() => data);
     } catch (error) {

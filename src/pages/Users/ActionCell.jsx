@@ -9,7 +9,6 @@ import AxiosConfig from '../../AxiosConfig';
 import { AlertContext } from '../../context/AlertContext';
 function ActionCell({ props, gridRef }) {
   //states
-  const baseUrl = process.env.REACT_APP_BASE_URL;
   const [editing, setEditing] = useState(false);
   const { setAlert } = useContext(AlertContext);
   const axios = AxiosConfig();

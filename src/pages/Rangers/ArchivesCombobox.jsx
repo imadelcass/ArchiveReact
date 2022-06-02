@@ -1,36 +1,35 @@
-import { Select, MenuItem } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import style from "./style.module.scss";
-function ArchivesCombobox({ idArchive, setIdArchive }) {
-  const baseUrl = process.env.REACT_APP_BASE_URL;
-  //fetch les archives
-  const [archives, setArchives] = useState([]);
-  const getArchives = async () => {
-    try {
-      const req = await axios.get(`${baseUrl}/archive`);
-      const data = await req.data;
+import { Select, MenuItem } from '@mui/material';
+import { useEffect, useState } from 'react';
+import style from './style.module.scss';
+function ArchivesCombobox({ archives, idArchive, setIdArchive }) {
+  // const baseUrl = process.env.REACT_APP_BASE_URL;
+  // //fetch les archives
+  // const [archives, setArchives] = useState([]);
+  // const getArchives = async () => {
+  //   try {
+  //     const req = await axios.get(`${baseUrl}/archive`);
+  //     const data = await req.data;
 
-      setArchives(() => data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getArchives();
-  }, []);
+  //     setArchives(() => data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getArchives();
+  // }, []);
 
   return (
     <Select
       value={idArchive}
       className={style.selectOption}
-      onChange={(e) => {
+      onChange={e => {
         setIdArchive(e.target.value);
       }}
     >
-      {archives.map((a) => {
+      {archives.map(a => {
         return (
-          <MenuItem value={a.id} className="">
+          <MenuItem value={a.id} className=''>
             {a.codeArchive}
           </MenuItem>
         );

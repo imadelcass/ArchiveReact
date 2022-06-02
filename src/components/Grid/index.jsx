@@ -1,8 +1,10 @@
 import { AgGridReact } from 'ag-grid-react';
-import axios from 'axios';
+import AxiosConfig from '../../AxiosConfig';
 import { useContext, useRef } from 'react';
 import { GlobalContext } from '../../context/GlobalState';
 const Grid = ({ columns, dossiers, setDossier, setTypePieces }) => {
+
+  const axios = AxiosConfig();
   const gridRef = useRef();
   const defaultColDef = {
     editable: true,

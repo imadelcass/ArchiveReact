@@ -11,7 +11,7 @@ import CellulesSelect from './CellulesSelect';
 import ServicesSelect from './ServicesSelect';
 import TypeDossSelect from './TypeDossSelect';
 import BenefiSelect from './BenefiSelect';
-import axios from 'axios';
+import AxiosConfig from '../../AxiosConfig';
 import UsersSelect from './UsersSelect';
 import { AlertContext } from '../../context/AlertContext';
 import ActionCell from './ActionCell';
@@ -21,7 +21,7 @@ import NewTypeDoss from './NewTypeDoss';
 import Header from '../../components/Header';
 
 function Dossiers() {
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const axios = AxiosConfig();
   const gridRef = useRef();
   const [dossiers, setDossiers] = useState([]);
   const [dossValid, setDossValid] = useState(false);
@@ -45,8 +45,11 @@ function Dossiers() {
   const [cellule, setCellule] = useState('');
   const [displayNewTypeDoss, setDisplayNewTypeDoss] = useState(false);
   const { setAlert } = useContext(AlertContext);
-  const { refTypeDoss, refServices, refBenefs, refCellules, refUsers } =
-    useContext(GlobalContext);
+  const [refTypeDoss, setRefTypeDoss] = useState({});
+  const [refServices, setRefServices] = useState({});
+  const [refBenefs, setRefBenefs] = useState({});
+  const [refCellules, setRefCellules] = useState({});
+  const [refUsers, setRefUsers] = useState({});
 
   const extractValues = mappings => {
     return Object.keys(mappings);
@@ -173,12 +176,7 @@ function Dossiers() {
   };
   const getDossiers = async () => {
     try {
-      const req = await axios.get('/dossiers', {
-        headers: {
-          // accept: 'application/json',
-          Authorization: 'Bearer 9|1MZhyvhRvpBIJkzjdEKL7SNgsN18fjpCFrQ1gaV7',
-        },
-      });
+      const req = await axios.get('/dossiers');
       const data = await req.data;
       console.log(data);
       setDossiers(data);
@@ -186,28 +184,107 @@ function Dossiers() {
       console.log(error);
     }
   };
+  const getTypeDossiers = async () => {
+    try {
+      const req = await axios.get(`/typedossiers`);
+      const data = await req.data;
+      //   setTypedossiers(() => data);
+      setRefTypeDoss(() => {
+        let obj = {};
+        data.map(e => {
+          obj[e.id] = e.libTypeDoss;
+        });
+        return obj;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getServices = async () => {
+    try {
+      const req = await axios.get(`/service`);
+      const data = await req.data;
+      setRefServices(() => {
+        let obj = {};
+        data.map(e => {
+          obj[e.id] = e.libService;
+        });
+        return obj;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getBeneficiaires = async () => {
+    try {
+      const req = await axios.get(`/beneficieres`);
+      const data = await req.data;
+      setRefBenefs(() => {
+        let obj = {};
+        data.map(e => {
+          obj[e.id] = e.NOMBENEFICIAIRE;
+        });
+        return obj;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getCellules = async () => {
+    try {
+      const req = await axios.get(`/cellules`);
+      const data = await req.data;
+      setRefCellules(() => {
+        let obj = {};
+        data.map(e => {
+          obj[e.id] = e.codeCellule;
+        });
+        return obj;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getUsers = async () => {
+    try {
+      const req = await axios.get(`/users`);
+      const data = await req.data;
+      setRefUsers(() => {
+        let obj = {};
+        data.map(e => {
+          obj[e.id] = e.name;
+        });
+        return obj;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const addNewDossier = async () => {
     try {
       console.log(dossier);
-      const req = await axios.post(`${baseUrl}/dossier/add`, dossier);
+      const req = await axios.post(`/dossier/add`, dossier);
       const data = await req.data;
       console.log(data);
-      if (data.success) {
-        setDisplay(false);
-        setAlert(() => {
-          return {
-            state: true,
-            text: data.msg,
-            severity: data.severity,
-          };
-        });
-      }
+      setDisplay(false);
+      setAlert(() => {
+        return {
+          state: true,
+          text: data.msg,
+          severity: data.severity,
+        };
+      });
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     getDossiers();
+    getTypeDossiers();
+    getServices();
+    getBeneficiaires();
+    getCellules();
+    getUsers();
   }, []);
 
   return (

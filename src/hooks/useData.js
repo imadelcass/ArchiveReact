@@ -27,7 +27,7 @@ const useData = ({ url }) => {
   //     // }
   //   };
 
-  useEffect(() => getData(), []);
+  useEffect(() => {getData(); console.log("reload");}, []);
 
   return {
     data,

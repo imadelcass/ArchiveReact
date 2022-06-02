@@ -21,9 +21,11 @@ import JsPDF from 'jspdf';
 import usePrint from '../../hooks/usePrint';
 import Grid from '../../components/Grid';
 import Columns from './columns';
-import axios from 'axios';
+import AxiosConfig from '../../AxiosConfig';
 
 const PiecesManquants = () => {
+
+  const axios = AxiosConfig();
   const dossCompoRef = useRef();
   const pieceCompoRef = useRef();
   const [dossiers, setDossiers] = useState([]);
