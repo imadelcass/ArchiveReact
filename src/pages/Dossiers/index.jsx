@@ -249,23 +249,25 @@ function Dossiers() {
     try {
       const req = await axios.get(`/users`);
       const data = await req.data;
-      setRefUsers(() => {
-        let obj = {};
-        data.map(e => {
-          obj[e.id] = e.name;
+      if (data.success) {
+        setRefUsers(() => {
+          let obj = {};
+          data.users.map(e => {
+            obj[e.id] = e.name;
+          });
+          return obj;
         });
-        return obj;
-      });
+      }
     } catch (error) {
       console.log(error);
     }
   };
+
+
   const addNewDossier = async () => {
     try {
-      console.log(dossier);
       const req = await axios.post(`/dossier/add`, dossier);
       const data = await req.data;
-      console.log(data);
       setDisplay(false);
       setAlert(() => {
         return {
@@ -278,6 +280,7 @@ function Dossiers() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getDossiers();
     getTypeDossiers();

@@ -6,9 +6,10 @@ import FirstPageSharpIcon from '@mui/icons-material/FirstPageSharp';
 import LastPageSharpIcon from '@mui/icons-material/LastPageSharp';
 import { Document, pdfjs, Page } from 'react-pdf';
 import { GlobalContext } from '../../context/GlobalState';
-import pdf from './jpeg-ou-png.pdf';
+import { RequestPageTwoTone } from '@mui/icons-material';
+// import pdf from './jpeg-ou-png.pdf';
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-const DisplayFile = () => {
+const DisplayFile = ({ pdf }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   // const { pdf } = useContext(GlobalContext);
@@ -30,11 +31,8 @@ const DisplayFile = () => {
       <h1>Le fichier de piece</h1>
       <div className='h-[600px] w-full'>
         <Document
-          // file={{
-          //   url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-          //   // url: 'http://127.0.0.1:8000/files/1654161119.pdf',
-          // }}
-          file={url}
+          file={pdf}
+          //file='files\1654279892.pdf'
           className='w-full h-[598px] flex justify-center items-center'
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={e => console.log(e)}

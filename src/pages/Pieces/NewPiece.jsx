@@ -10,7 +10,7 @@ import { GlobalContext } from '../../context/GlobalState';
 import { AlertContext } from '../../context/AlertContext';
 import AxiosConfig from '../../AxiosConfig';
 
-const NewPiece = ({ display, setDisplay }) => {
+const NewPiece = ({ display, setDisplay, gridRef }) => {
   const axios = AxiosConfig();
   const [dossiers, setDossiers] = useState([]);
   const [typePieces, setTypePieces] = useState([]);
@@ -44,14 +44,16 @@ const NewPiece = ({ display, setDisplay }) => {
     getDossiers();
   }, []);
 
-  const addNewPiece = async (piece) => {
+  const addNewPiece = async piece => {
     const formData = new FormData();
     piece.map(e => formData.append(e.name, e.value));
     try {
       const req = await axios.post('/piece/add', formData);
       const data = await req.data;
+      console.log(data);
       setDisplay(false);
       // execute alert
+      //execute alert
       setAlert(() => {
         return {
           state: true,
@@ -59,11 +61,14 @@ const NewPiece = ({ display, setDisplay }) => {
           severity: data.severity,
         };
       });
+      if (data.success) {
+        gridRef.current.api.applyTransaction({ add: [data.piece] });
+        // gridRef.current.api.refreshCells({ force: true });
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const piece = [
     { name: 'idTypePiece', value: idTypePiece },
@@ -171,9 +176,7 @@ const NewPiece = ({ display, setDisplay }) => {
           </div>
 
           <div className={style.modelBtns}>
-            <button onClick={() => addNewPiece(piece)}>
-              Add
-            </button>
+            <button onClick={() => addNewPiece(piece)}>Add</button>
           </div>
         </div>
       </div>

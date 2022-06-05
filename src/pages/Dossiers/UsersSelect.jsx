@@ -12,7 +12,7 @@ function UsersSelect({idUser, setIdUser}) {
     try {
       const req = await axios.get(`/users`);
       const data = await req.data;
-      setUsers(() => data);
+      setUsers(() => data.users);
     } catch (error) {
       console.log(error);
     }

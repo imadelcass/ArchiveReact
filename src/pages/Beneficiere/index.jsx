@@ -34,6 +34,7 @@ function Beneficiere() {
     gsm,
   };
   //************functions****************//
+
   const addNewBeneficiere = async () => {
     try {
       const req = await axios.post(`${baseUrl}/beneficiaire/add`, beneficiaire);
@@ -63,6 +64,8 @@ function Beneficiere() {
       console.log(error);
     }
   };
+
+  
   const onBtPrint = () => {};
   return (
     <div className={style.beneficiere}>

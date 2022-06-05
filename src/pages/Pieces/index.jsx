@@ -10,6 +10,7 @@ import AxiosConfig from '../../AxiosConfig';
 const Pieces = () => {
   const axios = AxiosConfig();
   const [pieces, setPieces] = useState([]);
+  const [pdf, setPdf] = useState('');
   const getPieces = async () => {
     try {
       const req = await axios.get(`/pieces`);
@@ -24,9 +25,9 @@ const Pieces = () => {
     <div className={style.pieces}>
       <Header title='Pieces' />
       <div className={style.container}>
-        <PieceGrid pieces={pieces} />
+        <PieceGrid pieces={pieces} setPdf={setPdf} />
         {/* <NewPage pieces={pieces} /> */}
-        <DisplayFile />
+        <DisplayFile pdf={pdf} />
       </div>
     </div>
   );

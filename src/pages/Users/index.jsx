@@ -19,8 +19,9 @@ const Users = () => {
     try {
       const req = await axios.get('/users');
       const res = await req.data;
+      console.log(res);
       if (res.success) {
-        setUsers(res);
+        setUsers(res.users);
       }
     } catch (error) {
       console.log(error);

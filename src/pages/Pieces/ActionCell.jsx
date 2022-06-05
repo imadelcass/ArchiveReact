@@ -1,30 +1,32 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import Update from "@mui/icons-material/Update";
-import Cancel from "@mui/icons-material/Cancel";
-import { IconButton, Tooltip } from "@mui/material";
-import { memo, useContext, useEffect, useRef, useState } from "react";
-import style from "./style.module.scss";
-import axios from "axios";
-import { AlertContext } from "../../context/AlertContext";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Update from '@mui/icons-material/Update';
+import Cancel from '@mui/icons-material/Cancel';
+import { IconButton, Tooltip } from '@mui/material';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
+import style from './style.module.scss';
+import AxiosConfig from '../../AxiosConfig';
+
+import { AlertContext } from '../../context/AlertContext';
 
 const ActionCell = ({ props, gridRef }) => {
+  const axios = AxiosConfig();
   const [editing, setEditing] = useState(false);
   const { setAlert } = useContext(AlertContext);
   useEffect(() => {
-    props.api.addEventListener("rowEditingStarted", onRowEditingStarted);
-    props.api.addEventListener("rowEditingStopped", onRowEditingStopped);
+    props.api.addEventListener('rowEditingStarted', onRowEditingStarted);
+    props.api.addEventListener('rowEditingStopped', onRowEditingStopped);
     return () => {
-      props.api.removeEventListener("rowEditingStarted", onRowEditingStarted);
-      props.api.removeEventListener("rowEditingStopped", onRowEditingStopped);
+      props.api.removeEventListener('rowEditingStarted', onRowEditingStarted);
+      props.api.removeEventListener('rowEditingStopped', onRowEditingStopped);
     };
   }, []);
-  const onRowEditingStarted = (params) => {
+  const onRowEditingStarted = params => {
     if (props.node === params.node) {
       setEditing(true);
     }
   };
-  const onRowEditingStopped = (params) => {
+  const onRowEditingStopped = params => {
     if (props.node === params.node) {
       setEditing(false);
     }
@@ -80,37 +82,37 @@ const ActionCell = ({ props, gridRef }) => {
     }
   };
   return (
-    <div className="flex items-center justify-center">
+    <div className='flex items-center justify-center'>
       {editing ? (
         <>
-          <div className="" onClick={() => updatePiece()}>
-            <Tooltip title="Update" arrow>
+          <div className='' onClick={() => updatePiece()}>
+            <Tooltip title='Update' arrow>
               <IconButton>
-                <Update fontSize={"100px"} />
+                <Update fontSize={'100px'} />
               </IconButton>
             </Tooltip>
           </div>
-          <div className="" onClick={() => cancelUpdatePiece()}>
-            <Tooltip title="Cancel" arrow>
+          <div className='' onClick={() => cancelUpdatePiece()}>
+            <Tooltip title='Cancel' arrow>
               <IconButton>
-                <Cancel fontSize={"small"} />
+                <Cancel fontSize={'small'} />
               </IconButton>
             </Tooltip>
           </div>
         </>
       ) : (
         <>
-          <div className="" onClick={() => displayPiece()}>
-            <Tooltip title="Edit" arrow>
+          <div className='' onClick={() => displayPiece()}>
+            <Tooltip title='Edit' arrow>
               <IconButton>
-                <EditIcon fontSize={"100px"} />
+                <EditIcon fontSize={'100px'} />
               </IconButton>
             </Tooltip>
           </div>
-          <div className="" onClick={() => deletePiece()}>
-            <Tooltip title="Delete" arrow>
+          <div className='' onClick={() => deletePiece()}>
+            <Tooltip title='Delete' arrow>
               <IconButton>
-                <DeleteIcon fontSize={"small"} />
+                <DeleteIcon fontSize={'small'} />
               </IconButton>
             </Tooltip>
           </div>

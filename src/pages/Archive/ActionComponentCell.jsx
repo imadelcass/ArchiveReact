@@ -64,6 +64,7 @@ const ActionComponentCell = ({ gridRef, props }) => {
   };
 
   //supprimer un archive
+  
   const deleteArchive = async () => {
     try {
       const req = await axios.delete(`/archive/destroy/${props.data.id}`);
